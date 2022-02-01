@@ -26,17 +26,11 @@ jobs:
       with:
         driver-opts: network=host
     - uses: docker/login-action@v1
-      name: Login ghcr.io
+      name: Login hub.docker.com
       with:
-        password: ${{ secrets.CR_PAT }}
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-    - uses: docker/login-action@v1
-      name: Login docker.io
-      with:
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.HUB_PASSWORD }}
+        registry: hub.docker.com
+        username: ${{ secrets.HUB_USERNAME }}
     - name: Build && May push
       env:
         BASE_DISTRIBUTION: ${{ matrix.BASE_DISTRIBUTION }}
@@ -46,7 +40,7 @@ jobs:
         DOCKERX_PUSH: ${{ github.event_name != 'pull_request' }}
         GITHUB_REF: ${{ github.ref }}
         GITHUB_SHA: ${{ github.sha }}
-        HUB: ghcr.io/querycap/istio docker.io/querycapistio
+        HUB: hub.docker.com/madhukirans/istio/multiarch
       run: |-
         if [[ ${GITHUB_REF} != "refs/heads/master" ]]; then
           export DOCKERX_TAGS=sha-${GITHUB_SHA::7}
