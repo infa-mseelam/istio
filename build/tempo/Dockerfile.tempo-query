@@ -1,6 +1,6 @@
 ARG VERSION
 
-FROM --platform=${BUILDPLATFORM} golang:1.15 AS builder
+FROM --platform=${BUILDPLATFORM} golang:1.14.8 AS builder
 
 ARG VERSION
 RUN git clone --depth=1 -b v${VERSION} https://github.com/grafana/tempo.git /go/src;

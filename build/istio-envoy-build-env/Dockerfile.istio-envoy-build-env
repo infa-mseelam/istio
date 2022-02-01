@@ -24,7 +24,7 @@ RUN set -eux; \
     cp /tmp/gn/out/gn /gn/gn; \
     /gn/gn --version;
 
-FROM golang:1.15 AS bazel
+FROM golang:1.14.8 AS bazel
 
 RUN set -eux; \
     \

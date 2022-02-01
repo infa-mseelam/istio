@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:experimental
 
 # clone src
-FROM --platform=${BUILDPLATFORM} golang:1.15 AS src
+FROM --platform=${BUILDPLATFORM} golang:1.14.8 AS src
 
 ARG VERSION
 RUN git clone --depth=1 -b v${VERSION} https://github.com/jaegertracing/jaeger.git /go/src/
@@ -16,7 +16,7 @@ WORKDIR /go/src/jaeger-ui
 RUN yarn install --frozen-lockfile && cd packages/jaeger-ui && yarn build
 
 # build golang
-FROM --platform=${BUILDPLATFORM} golang:1.15 AS builder
+FROM --platform=${BUILDPLATFORM} golang:1.14.8 AS builder
 
 COPY --from=src /go/src /go/src
 COPY --from=ui /go/src/jaeger-ui/packages/jaeger-ui/build /go/src/jaeger-ui/packages/jaeger-ui/build
